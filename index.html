@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Chair</title>
+  <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+
+  <script>
+    function updateBackground() {
+      $.getJSON('https://ilyankou.domains.trincoll.edu/chair', function(data) {
+        var n = data.n;
+        var filename = n + '-KR-2.png';
+        if (n < 10) {
+          filename = '000' + filename;
+        } else if (n < 100) {
+          filename = '00' + filename;
+        } else if (n < 1000) {
+          filename = '0' + filename;
+        }
+
+        filename = 'url(img/' + filename + ')';
+
+        $('#chair').css('background-image', filename);
+
+        setTimeout(updateBackground, 100);
+      }).fail(function() {
+        setTimeout(updateBackground, 100);
+
+      });
+    }
+
+    updateBackground();
+  </script>
+
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+  }
+
+  #chair {
+    /*height: 100vh;
+    width: 100vh; */
+    height: 512px;
+    width: 512px;
+    background: black;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(50vh - 256px);
+    background-image: url(img/0001-KR-2.png);
+    background-size: cover;
+  }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="chair"></div>
+
+</body>
+</html>

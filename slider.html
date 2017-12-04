@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slider</title>
+  <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  #slider-container {
+    height: 100vh;
+    width: 100vh;
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #slider {
+    margin: 0;
+    padding: 0;
+    margin-top: 49vh;
+    width: 100%;
+  }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="slider-container">
+    <input type="range" min="1" max="1000" value="500" id="slider">
+  </div>
+
+  <script>
+  $('#slider').on('change mousemove', function() {
+    var v = $(this).val();
+    $.get('https://ilyankou.domains.trincoll.edu/chair?n=' + v, function() {
+      return;
+    });
+  });
+  </script>
+
+</body>
+</html>
