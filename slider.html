@@ -130,18 +130,18 @@
 
 <body>
 
-  <div id="slider-container">
-    <input type="range" min="1" max="1000" value="500" id="slider">
-  </div>
-
   <script>
-  $('#slider').on('change mousemove', function() {
-    var v = $(this).val();
+  function updateN(v) {
     $.get('https://ilyankou.domains.trincoll.edu/chair?n=' + v, function() {
       return;
     });
-  });
+  }
   </script>
+
+  <div id="slider-container">
+    <input type="range" min="1" max="1000" value="500" id="slider"
+      onchange="updateN(this.value)" oninput="updateN(this.value)">
+  </div>
 
 </body>
 </html>
