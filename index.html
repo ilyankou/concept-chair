@@ -9,33 +9,6 @@
 			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			  crossorigin="anonymous"></script>
 
-  <script>
-    function updateBackground() {
-      $.getJSON('https://ilyankou.domains.trincoll.edu/chair', function(data) {
-        var n = data.n;
-        var filename = n + '-KR-2.png';
-        if (n < 10) {
-          filename = '000' + filename;
-        } else if (n < 100) {
-          filename = '00' + filename;
-        } else if (n < 1000) {
-          filename = '0' + filename;
-        }
-
-        filename = 'url(img/' + filename + ')';
-
-        $('#chair').css('background-image', filename);
-
-        setTimeout(updateBackground, 100);
-      }).fail(function() {
-        setTimeout(updateBackground, 100);
-
-      });
-    }
-
-    updateBackground();
-  </script>
-
   <style>
   body {
     margin: 0;
@@ -44,16 +17,25 @@
   }
 
   #chair {
-    /*height: 100vh;
-    width: 100vh; */
     height: 512px;
     width: 512px;
     background: black;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
     margin-top: calc(50vh - 256px);
-    background-image: url(img/0001-KR-2.png);
-    background-size: cover;
+    margin-left: calc(50vw - 256px);
+  }
+
+  #chair img {
+    height: 512px;
+    width: 512px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+  }
+
+  img.ontop {
+    visibility: visible !important;
   }
   </style>
 
@@ -62,6 +44,35 @@
 <body>
 
   <div id="chair"></div>
+
+  <script>
+
+    for (i = 0; i < 1000; i++) {
+      var img = $('<img>');
+      img.attr('src', 'img/' + (i + 1) + '.png');
+      img.appendTo('#chair');
+    }
+
+    var current = 500;
+
+    function updateBackground() {
+
+      $.getJSON('https://ilyankou.domains.trincoll.edu/chair', function(data) {
+        var n = parseInt(data.n);
+        if (current != n) {
+          $('#chair img.ontop').removeClass('ontop');
+          $('#chair img:eq(' + (n - 1) + ')').addClass('ontop');
+        }
+        setTimeout(updateBackground, 100);
+
+      }).fail(function() {
+        setTimeout(updateBackground, 100);
+
+      });
+    }
+
+    updateBackground();
+  </script>
 
 </body>
 </html>
